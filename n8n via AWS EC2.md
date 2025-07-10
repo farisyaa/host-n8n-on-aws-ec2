@@ -5,10 +5,10 @@ A simple, less than 10 steps guide to set up your own [n8n](https://n8n.io) auto
 
 ## 🧩 Part 1: Launch EC2 Instance on AWS
 
-### ✅ Step 1: Create an AWS Account
+### Step 1: Create an AWS Account
 Sign up at [aws.amazon.com](https://aws.amazon.com/).
 
-### ✅ Step 2: Launch a New EC2 Instance
+### Step 2: Launch a New EC2 Instance
 
 1. Go to EC2 Dashboard → click **Launch Instance**
 2. **Name**: e.g., `n8n-server`
@@ -20,7 +20,7 @@ Sign up at [aws.amazon.com](https://aws.amazon.com/).
    - Add Custom TCP (port 5678)
 7. Leave everything else as default and launch the instance.
 
-### ✅ Step 3: Connect to Your Instance via SSH (macOS)
+### Step 3: Connect to Your Instance via SSH (macOS)
 
 #### 1. Set permissions for your `.pem` key:
 ```bash
@@ -33,12 +33,12 @@ ssh -i ~/Downloads/my-key.pem ec2-user@<your-public-ip>
 ```
 
 ## ⚙️ Part 2: Configure n8n on EC2
-### ✅ Step 1: Update the system
+###  Step 1: Update the system
 ```bash
 sudo yum update -y
 ```
 
-### ✅ Step 2: Install Node.js & npm
+###  Step 2: Install Node.js & npm
 ```bash
 curl -fsSL https://rpm.nodesource.com/setup_18.x | sudo bash -
 sudo yum install -y nodejs
@@ -48,18 +48,18 @@ node -v
 npm -v
 ```
 
-### ✅ Step 3: Install n8n Globally
+###  Step 3: Install n8n Globally
 ```bash
 sudo npm install -g n8n
 n8n --version
 ```
 
-### ✅ Step 4: Test your n8n
+###  Step 4: Test your n8n
 ```bash
 http://<your-public-ip>:5678
 ```
 
-### ✅ Step 5: Add Port 5678 to Security Group
+###  Step 5: Add Port 5678 to Security Group
 Go to EC2 Console → Security Groups
 1. Edit Inbound Rules
 2. Add:
@@ -67,7 +67,7 @@ Go to EC2 Console → Security Groups
    - Port: 5678
    - Source: 0.0.0.0/0 (or limit to your IP)
 
-### ✅ Step 6: Run n8n as a Background Service
+###  Step 6: Run n8n as a Background Service
 #### 1. Create a systemd service file:
 ```bash
 sudo nano /etc/systemd/system/n8n.service
@@ -98,7 +98,7 @@ sudo systemctl start n8n
 sudo systemctl status n8n
 ```
 
-### ✅ Step 7: Enable HTTPS with SSL
+###  Step 7: Enable HTTPS with SSL
 #### 1. Install OpenSSL & generate certs
 ```bash
 sudo yum install -y openssl
@@ -111,7 +111,7 @@ sudo openssl req -x509 -newkey rsa:4096 -keyout /etc/n8n-certs/n8n-key.pem -out 
 sudo chown ec2-user:ec2-user /etc/n8n-certs/n8n-*.pem
 ```
 
-### ✅ Step 8: Enable HTTPS with SSL
+###  Step 8: Enable HTTPS with SSL
 #### 1. Edit the systemd service
 ```bash
 sudo nano /etc/systemd/system/n8n.service
